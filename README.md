@@ -17,6 +17,10 @@ and
 
 ### Build instructions
 
+Before building, make sure to install the `org.randoom.setlx:setlX-core:2.6.0`
+package to your local maven repository. This can be done by running
+`mvn clean install` in the `interpreter` directory of the
+[SetlX repository](https://github.com/herrmanntom/setlX/tree/v2.6.0).
 Replace `$setlXJarDirectory` with the value used for the equally
 called variable in your SetlX start script.
 
