@@ -9,6 +9,9 @@ in SetlX. Under the hood, it uses
 [OkHttp](http://square.github.io/okhttp/)
 and
 [JSON-java](https://github.com/stleary/JSON-java).
+You can find a prebuilt version of the addon under
+the [release tab](https://github.com/niklaskorz/setlX-addons/releases)
+of this repository.
 
 ### Dependencies
 
