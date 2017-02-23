@@ -25,9 +25,9 @@ package to your local maven repository. This can be done by running
 `mvn clean install` in the `interpreter` directory of the
 [SetlX repository](https://github.com/herrmanntom/setlX/tree/v2.6.0).
 In the code snippet below, replace the string `$setlXJarDirectory` with the value that
-is asigned to the variable setlXJarDirectory in your SetlX start script.  In order
-to install the addons, open a shell in the directory where setlx-addons.  Then,
-building the addons is achieved with the following commands:
+is assigned to the variable setlXJarDirectory in your SetlX start script.  In order
+to install the addons, open a shell in the directory where setlx-addons has been installed.
+Then, building the addons is achieved with the following commands:
 
 - `cd http`
 - `gradle clean fatJar`
