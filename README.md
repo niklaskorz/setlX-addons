@@ -24,12 +24,16 @@ Before building, make sure to install the `org.randoom.setlx:setlX-core:2.6.0`
 package to your local maven repository. This can be done by running
 `mvn clean install` in the `interpreter` directory of the
 [SetlX repository](https://github.com/herrmanntom/setlX/tree/v2.6.0).
-Replace `$setlXJarDirectory` with the value used for the equally
-called variable in your SetlX start script.
+In the code snippet below, replace the string `$setlXJarDirectory` with the value that
+is assigned to the variable setlXJarDirectory in your SetlX start script.  In order
+to install the addons, open a shell in the directory where setlx-addons has been installed.
+Then, building the addons is achieved with the following commands:
 
 - `cd http`
 - `gradle clean fatJar`
 - `cp build/libs/setlX-http.jar $setlXJarDirectory`
+
+This will make the functions `http_get` and `http_getJson` available in your SetlX interpreter.
 
 ### Usage example
 
