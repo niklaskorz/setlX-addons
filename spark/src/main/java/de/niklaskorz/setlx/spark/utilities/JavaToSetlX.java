@@ -6,6 +6,7 @@ import org.randoom.setlx.utilities.State;
 
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by niklaskorz on 22.02.17.
@@ -27,12 +28,26 @@ public class JavaToSetlX {
         return set;
     }
 
+    public static SetlSet convertSet(State state, Set<?> obj) throws SetlException {
+        SetlSet set = new SetlSet();
+        for (Object o : obj) {
+            set.addMember(state, convert(state, o));
+        }
+        return set;
+    }
+
     public static Value convert(State state, Object obj) throws SetlException {
+        if (obj instanceof Value) {
+            return (Value) obj;
+        }
         if (obj instanceof List) {
             return convertList(state, (List) obj);
         }
         if (obj instanceof Map) {
             return convertMap(state, (Map) obj);
+        }
+        if (obj instanceof Set) {
+            return convertSet(state, (Set) obj);
         }
         if (obj instanceof Boolean) {
             return SetlBoolean.valueOf((Boolean) obj);

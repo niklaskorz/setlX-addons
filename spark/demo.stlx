@@ -1,8 +1,36 @@
-spark_get("/:name/:color", procedure(request, response) {
-    id := spark_requestParams(request, "name");
-    color := spark_requestParams(request, "color");
-    params := spark_requestParams(request);
-    return "<!doctype html><p style='color: $color$;'>Hello $id$</p>";
+spark := importSpark();
+
+users := {};
+
+spark.before(procedure(request, response) {
+    request.hello := "World!";
 });
 
-spark_wait();
+spark.get("/redirect", procedure(request, response) {
+    response.redirect("/users/");
+});
+
+spark.get("/users/", closure(request, response) {
+    return users;
+});
+
+spark.get("/users/:id", closure(request, response) {
+    params := request.params;
+    id := params[":id"];
+    return users[id];
+});
+
+spark.put("/users/:id", closure(request, response) {
+    params := request.params;
+    id := params[":id"];
+    data := request.body;
+    users[id] := data;
+});
+
+spark.get("/info", procedure(request, response) {
+    return "Hello $request.hello$";
+});
+
+// Route overview at: http://localhost:4567/debug/routeoverview/
+spark.enableRouteOverview();
+spark.wait();
