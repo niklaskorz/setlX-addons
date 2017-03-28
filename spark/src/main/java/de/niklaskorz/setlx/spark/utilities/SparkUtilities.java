@@ -1,5 +1,6 @@
 package de.niklaskorz.setlx.spark.utilities;
 
+import de.niklaskorz.setlx.spark.types.JavaObject;
 import de.niklaskorz.setlx.spark.types.SparkRequest;
 import de.niklaskorz.setlx.spark.types.SparkResponse;
 import org.randoom.setlx.exceptions.SetlException;
@@ -20,7 +21,7 @@ import java.util.List;
  */
 public class SparkUtilities {
     public static String handle(State state, Procedure callback, Request request, Response response) throws SetlException {
-        List<Value> argumentValues = Arrays.asList(new SparkRequest(request), new SparkResponse(response));
+        List<Value> argumentValues = Arrays.asList(new JavaObject(request), new SparkResponse(response));
         FragmentList<OperatorExpression> arguments = new FragmentList<>();
         Value result = callback.call(state, argumentValues, arguments, null, null);
         if (result == Om.OM) {

@@ -2,9 +2,9 @@ spark := importSpark();
 
 users := {};
 
-spark.before(procedure(request, response) {
+/* spark.before(procedure(request, response) {
     request.hello := "World!";
-});
+}); */
 
 spark.get("/redirect", procedure(request, response) {
     response.redirect("/users/");
@@ -30,6 +30,15 @@ spark.put("/users/:id", closure(request, response) {
 spark.get("/info", procedure(request, response) {
     locale := request.cookies["locale"];
     return "Hello $request.hello$ (locale: $locale$)";
+});
+
+spark.get("/test", procedure(request, response) {
+    print("request: ", request);
+    print("request.ip: ", request.ip);
+    print("request.ip(): ", request.ip());
+    print("request.queryMap: ", request.queryMap);
+    print("request.queryMap(): ", request.queryMap());
+    return request.queryMap().get("name").value();
 });
 
 // Route overview at: http://localhost:4567/debug/routeoverview/

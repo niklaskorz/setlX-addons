@@ -1,5 +1,6 @@
 package de.niklaskorz.setlx.spark.utilities;
 
+import de.niklaskorz.setlx.spark.types.JavaObject;
 import org.randoom.setlx.exceptions.SetlException;
 import org.randoom.setlx.types.*;
 import org.randoom.setlx.utilities.State;
@@ -64,6 +65,6 @@ public class JavaToSetlX {
         if (obj instanceof String) {
             return new SetlString((String) obj);
         }
-        return Om.OM;
+        return new JavaObject(obj);
     }
 }
