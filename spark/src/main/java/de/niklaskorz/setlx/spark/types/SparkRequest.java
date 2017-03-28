@@ -8,6 +8,8 @@ import org.randoom.setlx.utilities.SetlHashMap;
 import org.randoom.setlx.utilities.State;
 import spark.Request;
 
+import java.lang.reflect.Method;
+
 /**
  * Created by niklaskorz on 25.02.17.
  */
@@ -71,55 +73,17 @@ public class SparkRequest extends Value {
     @Override
     public Value getObjectMemberUnCloned(State state, String variable) throws SetlException {
         // Custom attributes shadow predefined properties
-        if (request.attribute(variable) != null) {
-            return JavaToSetlX.convert(state, request.attribute(variable));
+        Object attr = request.attribute(variable);
+        if (attr != null) {
+            return JavaToSetlX.convert(state, attr);
         }
 
-        switch (variable) {
-            case "attributes":
-                return JavaToSetlX.convertSet(state, request.attributes());
-            case "body":
-                return new SetlString(request.body());
-            case "contentLength":
-                return Rational.valueOf(request.contentLength());
-            case "contentType":
-                return new SetlString(request.contentType());
-            case "contextPath":
-                return new SetlString(request.contextPath());
-            case "cookies":
-                return JavaToSetlX.convertMap(state, request.cookies());
-            case "headers":
-                return JavaToSetlX.convertSet(state, request.headers());
-            case "host":
-                return new SetlString(request.host());
-            case "ip":
-                return new SetlString(request.ip());
-            case "params":
-                return JavaToSetlX.convertMap(state, request.params());
-            case "pathInfo":
-                return new SetlString(request.pathInfo());
-            case "port":
-                return Rational.valueOf(request.port());
-            case "protocol":
-                return new SetlString(request.protocol());
-            case "queryMap":
-                return JavaToSetlX.convertMap(state, request.queryMap().toMap());
-            case "queryParams":
-                return JavaToSetlX.convertSet(state, request.queryParams());
-            case "requestMethod":
-                return new SetlString(request.requestMethod());
-            case "scheme":
-                return new SetlString(request.scheme());
-            case "servletPath":
-                return new SetlString(request.servletPath());
-            case "uri":
-                return new SetlString(request.uri());
-            case "url":
-                return new SetlString(request.url());
-            case "userAgent":
-                return new SetlString(request.userAgent());
-            default:
-                return Om.OM;
+        try {
+            Method m = Request.class.getMethod(variable);
+            // TODO: Handle request.queryMap properly
+            return JavaToSetlX.convert(state, m.invoke(request));
+        } catch (Exception e) {
+            return Om.OM;
         }
     }
 

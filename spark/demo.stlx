@@ -28,7 +28,8 @@ spark.put("/users/:id", closure(request, response) {
 });
 
 spark.get("/info", procedure(request, response) {
-    return "Hello $request.hello$";
+    locale := request.cookies["locale"];
+    return "Hello $request.hello$ (locale: $locale$)";
 });
 
 // Route overview at: http://localhost:4567/debug/routeoverview/
