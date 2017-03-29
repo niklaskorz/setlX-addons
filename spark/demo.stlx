@@ -34,11 +34,11 @@ spark.get("/info", procedure(request, response) {
 
 spark.get("/test", procedure(request, response) {
     print("request: ", request);
-    print("request.ip: ", request.ip);
-    print("request.ip(): ", request.ip());
-    print("request.queryMap: ", request.queryMap);
-    print("request.queryMap(): ", request.queryMap());
-    return request.queryMap().get("name").value();
+    print("request.headers: ", request.headers);
+    headers := request.headers();
+    print("request.headers(): ", headers);
+    print("request.headers(value): ", request.headers(first(headers)));
+    return "Test finished";
 });
 
 // Route overview at: http://localhost:4567/debug/routeoverview/

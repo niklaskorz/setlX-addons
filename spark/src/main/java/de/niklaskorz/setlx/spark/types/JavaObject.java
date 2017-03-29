@@ -10,6 +10,7 @@ import org.randoom.setlx.utilities.State;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.Arrays;
 
 /**
  * Created by niklaskorz on 28.03.17.
@@ -72,14 +73,14 @@ public class JavaObject extends Value {
     }
 
     @Override
-    public Value getObjectMemberUnCloned(State state, String variable) throws SetlException {
+    public Value getObjectMemberUnCloned(State state, final String variable) throws SetlException {
         Class<?> c = wrappedObject.getClass();
         try {
-            Method m = c.getMethod(variable);
-            if (!m.isAccessible()) {
-                m.setAccessible(true);
+            for (Method m : c.getMethods()) {
+                if (m.getName().equals(variable)) {
+                    return new JavaMethod(wrappedObject, variable);
+                }
             }
-            return new JavaMethod(wrappedObject, m);
         } catch (Exception e) {
             // Pass
         }
